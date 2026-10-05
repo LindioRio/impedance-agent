@@ -1,0 +1,14 @@
+diff --git a/impedance_agent/core/env.py b/impedance_agent/core/env.py
+index 36b8995..2ab42ab 100644
+--- a/impedance_agent/core/env.py
++++ b/impedance_agent/core/env.py
+@@ -183,5 +183,6 @@ class Environment:
+         return providers
+ 
+ 
+-# Global environment instance
+-env = Environment()
+\ No newline at end of file
++# Load provider settings without requiring credentials during imports/help.
++# The analyze command validates configured providers before any API call.
++env = Environment(validate=False)

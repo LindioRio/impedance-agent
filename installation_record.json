@@ -1,0 +1,77 @@
+{
+  "installed_date_client": "2026-10-05",
+  "recorded_utc": "2026-10-05T15:28:30.611880+00:00",
+  "repository": "https://github.com/richinex/impedance-agent.git",
+  "commit": "0294d732c97f824a9cabb4945c523955b5d75d01",
+  "package_version": "0.1.0",
+  "python_version": "3.12.14 (main, Aug 14 2026, 15:40:22) [MSC v.1944 64 bit (AMD64)]",
+  "python_executable": "D:\\Lindiomar\\Posdoc B\u00e9lgica\\Work Pavel EIS\\tools\\impedance-agent\\.venv\\Scripts\\python.exe",
+  "installation_type": "Workspace-local editable package in isolated .venv",
+  "runtime_location": ".cache/python/cpython-3.12-windows-x86_64-none",
+  "launcher": "../../impedance-agent.ps1",
+  "dependency_lock": "installed-requirements.txt",
+  "important_package_versions": {
+    "impedance-agent": "0.1.0",
+    "numpy": "1.26.4",
+    "scipy": "1.17.1",
+    "jax": "0.7.1",
+    "jaxlib": "0.7.1",
+    "jaxopt": "0.8.5",
+    "pydantic": "2.13.5",
+    "typer": "0.27.2",
+    "openai": "3.24.0",
+    "impedance": "1.7.1",
+    "pandas": "3.0.6"
+  },
+  "local_patch": "Global environment loads without import-time API credential validation; analyze still checks configured providers.",
+  "patch_sha256": "ed3efd07b5a86d533605ac262adfefe3cf07dfd83e1beddd5856b0419710e363",
+  "checks": {
+    "CLI_help": "PASS",
+    "CLI_version": "PASS",
+    "analyze_help": "PASS",
+    "pip_dependency_check": "PASS",
+    "selected_upstream_tests_unique_passed": 15,
+    "LLM_provider_api_call": "Not performed"
+  },
+  "test_attempts": [
+    {
+      "file": "verification/offline-tests.xml",
+      "outcomes": {
+        "passed": 9,
+        "failed": 0,
+        "errors": 6,
+        "skipped": 0
+      }
+    },
+    {
+      "file": "verification/loader-tests.xml",
+      "outcomes": {
+        "passed": 7,
+        "failed": 0,
+        "errors": 0,
+        "skipped": 0
+      }
+    }
+  ],
+  "final_selected_test_outcomes": {
+    "tests.test_core.test_loaders::test_load_txt_files": "passed",
+    "tests.test_core.test_loaders::test_load_csv_file": "passed",
+    "tests.test_core.test_loaders::test_load_excel_file": "passed",
+    "tests.test_core.test_loaders::test_invalid_file": "passed",
+    "tests.test_core.test_loaders::test_unsupported_format": "passed",
+    "tests.test_core.test_loaders::test_invalid_data": "passed",
+    "tests.test_core.test_loaders::test_frequency_ordering": "passed",
+    "tests.test_fitters.test_linkk::test_linkk_initialization": "passed",
+    "tests.test_fitters.test_linkk::test_linkk_fitting": "passed",
+    "tests.test_fitters.test_linkk::test_linkk_parameters": "passed",
+    "tests.test_fitters.test_linkk::test_linkk_with_noisy_data": "passed",
+    "tests.test_fitters.test_linkk::test_linkk_error_handling": "passed",
+    "tests.test_fitters.test_linkk::test_linkk_consistency": "passed",
+    "tests.test_fitters.test_ecm::test_ecm_fitting": "passed",
+    "tests.test_fitters.test_drt::test_drt_fitting": "passed"
+  },
+  "test_execution_note": "Initial loader fixtures failed due to temporary-directory setup/sandbox ACLs; rerun passed outside sandbox. Numerical fitter checks passed in the initial run.",
+  "credentials": "Local .env contains empty API keys; runtime may also read externally configured environment variables. No credentials logged.",
+  "experimental_files": "No experimental files analysed, uploaded or altered during installation.",
+  "scope": "Installed Python tool; this is not model-weight training or a new live Codex subagent."
+}

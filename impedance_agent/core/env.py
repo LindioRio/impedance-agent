@@ -183,5 +183,6 @@ class Environment:
         return providers
 
 
-# Global environment instance
-env = Environment()
+# Load provider settings without requiring credentials during imports/help.
+# The analyze command validates configured providers before any API call.
+env = Environment(validate=False)
