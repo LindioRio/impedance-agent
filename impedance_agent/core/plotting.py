@@ -108,17 +108,20 @@ class PlotManager:
         plt.close()
 
     @staticmethod
-    def _plot_nyquist(result: AnalysisResult, ax) -> None:
+    def _plot_nyquist(result: AnalysisResult, ax, experimental_data=None, unit_scale=1.0) -> None:
         """Create publication-quality Nyquist plot"""
-        if not hasattr(result, "linkk_fit") or result.linkk_fit is None:
+        if experimental_data is not None:
+            Z = (experimental_data.real + 1j * experimental_data.imaginary) / unit_scale
+            measured_label = "Experimental"
+        elif not hasattr(result, "linkk_fit") or result.linkk_fit is None:
             PlotManager.logger.warning("No Lin-KK results available for Nyquist plot")
             return
-
-        if not hasattr(result.linkk_fit, "Z_fit"):
+        elif not hasattr(result.linkk_fit, "Z_fit"):
             PlotManager.logger.warning("No impedance data found in Lin-KK results")
             return
-
-        Z = result.linkk_fit.Z_fit
+        else:
+            Z = result.linkk_fit.Z_fit / unit_scale
+            measured_label = "Lin-KK reconstruction"
 
         # Plot experimental data
         ax.plot(
@@ -126,7 +129,7 @@ class PlotManager:
             -Z.imag,
             "o",
             color="#1f77b4",
-            label="Experimental",
+            label=measured_label,
             markerfacecolor="none",
             markeredgewidth=0.75,
         )
@@ -137,7 +140,7 @@ class PlotManager:
             and hasattr(result.ecm_fit, "Z_fit")
             and result.ecm_fit.Z_fit is not None
         ):
-            z_fit = result.ecm_fit.Z_fit
+            z_fit = result.ecm_fit.Z_fit / unit_scale
             ax.plot(
                 z_fit.real,
                 -z_fit.imag,
@@ -257,8 +260,33 @@ class PlotManager:
         ax.set_ylim(-5, 5)  # Set to -5% to 5% range
 
     @staticmethod
-    def _plot_bode(result: AnalysisResult, ax) -> None:
-        """Create publication-quality Bode plot"""
+    def _plot_bode(result: AnalysisResult, ax, experimental_data=None,
+                   unit_scale=1.0, show_phase=True) -> None:
+        """Create a Bode plot; optional local mode uses measured f and signed Z.
+
+        The measured-data extension avoids substituting a Lin-KK reconstruction
+        or using a DRT time grid as the measurement frequency array. Calls that
+        omit experimental_data retain the original compatibility behavior.
+        """
+        if experimental_data is not None:
+            if unit_scale <= 0:
+                raise ValueError("unit_scale must be positive")
+            freq = experimental_data.frequency
+            Z = (experimental_data.real + 1j * experimental_data.imaginary) / unit_scale
+            ax.semilogx(freq, np.abs(Z), "o", color="blue",
+                        label="Measured |Z|", markerfacecolor="none",
+                        markeredgewidth=0.75)
+            ax.set_xlabel("Frequency / Hz", labelpad=2)
+            ax.set_ylabel(r"|Z| / $\Omega$", labelpad=2)
+            if show_phase:
+                phase_ax = ax.twinx()
+                phase_ax.semilogx(freq, np.angle(Z, deg=True), "o",
+                                 color="orange", label="Measured signed phase",
+                                 markerfacecolor="none", markeredgewidth=0.75)
+                phase_ax.set_ylabel("Signed phase / degrees", labelpad=2)
+                phase_ax.set_ylim(-180, 180)
+            return
+
         if not result.linkk_fit:
             PlotManager.logger.warning("No Lin-KK results available for Bode plot")
             return
