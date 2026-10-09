@@ -1,5 +1,13 @@
 # Impedance Agent installation for this EIS workspace
 
+## Impedance magnitude at 10 kHz versus voltage — 9 October 2026
+
+```powershell
+./tools/impedance-agent/.venv/Scripts/python.exe skills/eis-analysis/scripts/plot_impedance_voltage_10kHz_impedance_agent.py --date 2026-10-09
+```
+
+The [latest collection](../../EIS_10kHz_Voltage_PW_30mC_P1_PB_10mC_P3_2026-10-09_run02/index.md) contains the two requested PW30mC P1 / PB10mC P3 plots, visit-by-visit reports, extraction equations and comparison CSV/Markdown tables. Its explicit local `FixedFrequencyPlotManager` uses native measured-Bode magnitude calculation then substitutes the chronological DC-bias coordinate. The exact 10 kHz estimates interpolate signed Re/Im against log frequency; the nearest actual measured point at 9651.906 Hz is separately retained. All 26 raw TXT/XML pairs, prior canonical arrays, native loader round trips and interpolation checks are verified. Equal 8 × 6 inch PNG/PDF/SVG exports retain readable sample-specific y limits and a PB inset. No new circuit fitting or provider call is made; prior analyses and original data are preserved. Run01 remains available; new reruns allocate numbered folders.
+
 ## Polarization-stage Bode plots — 9 October 2026
 
 ```powershell
